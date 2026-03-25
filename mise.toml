@@ -1,0 +1,65 @@
+[tools]
+swift = "6.2"
+
+# Build
+[tasks.build]
+description = "Build the Swift package"
+usage = '''
+arg "<config>" default="debug" help="Build configuration" {
+  choices "debug" "release"
+}
+flag "-w --werror" help="Treat warnings as errors" default="true"
+flag "-v --verbose" help="Show verbose build output" default="false"
+'''
+run = '''
+echo "Building (config=${usage_config?}) werror=${usage_werror?}"
+swift build -c "${usage_config?}" \
+  ${usage_werror:+-Xswiftc -warnings-as-errors} \
+  ${usage_verbose:+-v}
+'''
+
+# Test
+[tasks.test]
+description = "Run Swift tests"
+usage = '''
+arg "<config>" default="debug" help="Test configuration" {
+  choices "debug" "release"
+}
+flag "-w --werror" help="Treat warnings as errors" default="true"
+flag "-v --verbose" help="Show verbose build output" default="false"
+'''
+run = '''
+echo "Testing (config=${usage_config?}) werror=${usage_werror?}"
+swift test -c "${usage_config?}" \
+  ${usage_werror:+-Xswiftc -warnings-as-errors} \
+  ${usage_verbose:+-v}
+'''
+
+# Format & Lint
+[tasks.format]
+description = "Format or lint source code"
+usage = '''
+flag "--check" help="Lint instead of format" default="false"
+'''
+run = '''
+if [ "${usage_check?}" = "true" ]; then
+  swift format lint --recursive --strict Sources Tests
+else
+  swift format --recursive -i Sources Tests
+fi
+'''
+
+# Continuous Integration
+[tasks.ci]
+description = "Run all CI gates"
+depends = [
+  "format --check",
+  "build",
+  "test",
+]
+run = "echo CI completed successfully"
+
+# Clean
+[tasks.clean]
+description = "Remove build artifacts"
+run = "swift package clean"
