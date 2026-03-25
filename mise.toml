@@ -1,5 +1,6 @@
 [tools]
 swift = "6.2"
+hk = { version = "latest", postinstall = "hk install" }
 
 # Build
 [tasks.build]

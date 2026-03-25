@@ -1,0 +1,22 @@
+amends "package://github.com/jdx/hk/releases/download/v1.39.0/hk@1.39.0#/Config.pkl"
+
+hooks {
+  ["pre-commit"] {
+    fix = true
+    stash = "git"
+    steps {
+      ["swift-format"] {
+        glob = List("*.swift")
+        check = "swift format lint --strict {{files}}"
+        fix = "swift format -i {{files}}"
+      }
+      ["swift-build"] {
+        run = "swift build -c release -Xswiftc -warnings-as-errors"
+      }
+      ["swift-test"] {
+        run = "swift test -Xswiftc -warnings-as-errors"
+      }
+    }
+  }
+}
+
