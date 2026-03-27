@@ -1,8 +1,10 @@
 [tools]
-swift = "6.2"
+swift = "6.3"
 hk = { version = "latest", postinstall = "hk install" }
 
 # Build
+
+[env]
 [tasks.build]
 description = "Build the Swift package"
 usage = '''
