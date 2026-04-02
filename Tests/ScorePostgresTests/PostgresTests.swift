@@ -2,12 +2,12 @@ import Testing
 
 @testable import ScorePostgres
 
-@Suite("PostgresKVConfig")
-struct PostgresKVConfigTests {
+@Suite("PostgresConfig")
+struct PostgresConfigTests {
 
     @Test("Default config uses standard values")
     func defaultConfig() {
-        let config = PostgresKVConfig()
+        let config = PostgresConfig()
         #expect(config.host == "localhost")
         #expect(config.port == 5432)
         #expect(config.username == "postgres")
@@ -16,7 +16,7 @@ struct PostgresKVConfigTests {
 
     @Test("Custom config overrides all fields")
     func customConfig() {
-        let config = PostgresKVConfig(
+        let config = PostgresConfig(
             host: "db.example.com",
             port: 5433,
             username: "app",

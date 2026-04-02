@@ -3,7 +3,7 @@
 /// ### Example
 ///
 /// ```swift
-/// let config = PostgresKVConfig(
+/// let config = PostgresConfig(
 ///     host: "localhost",
 ///     port: 5432,
 ///     username: "score",
@@ -11,7 +11,7 @@
 ///     database: "myapp"
 /// )
 /// ```
-public struct PostgresKVConfig: Sendable {
+public struct PostgresConfig: Sendable {
 
     /// The PostgreSQL server hostname.
     public let host: String
@@ -28,22 +28,17 @@ public struct PostgresKVConfig: Sendable {
     /// The database name.
     public let database: String?
 
-    /// The table name for key-value storage.
-    public let tableName: String
-
     public init(
         host: String = "localhost",
         port: Int = 5432,
         username: String = "postgres",
         password: String? = nil,
-        database: String? = nil,
-        tableName: String = "score_kv"
+        database: String? = nil
     ) {
         self.host = host
         self.port = port
         self.username = username
         self.password = password
         self.database = database
-        self.tableName = tableName
     }
 }

@@ -8,7 +8,7 @@ A PostgreSQL backend for ScoreData, providing durable key-value persistence with
 import Score
 import ScorePostgres
 
-let config = PostgresKVConfig(
+let config = PostgresConfig(
     host: "localhost",
     port: 5432,
     username: "score",
@@ -16,7 +16,7 @@ let config = PostgresKVConfig(
     database: "myapp"
 )
 
-let backend = try await PostgresKVBackend(config: config)
+let backend = try await PostgresBackend(config: config)
 let store = KVStore(backend: backend)
 
 // Same API as any other KVStore
@@ -42,4 +42,4 @@ CREATE TABLE IF NOT EXISTS score_kv (
 |---------|----------|
 | `.memory()` | Sessions, caches, tests |
 | `.persistent()` (SQLite) | Single-server apps, development |
-| **PostgresKVBackend** | Multi-server, managed database, production at scale |
+| **PostgresBackend** | Multi-server, managed database, production at scale |
